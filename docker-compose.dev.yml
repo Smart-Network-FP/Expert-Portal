@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  expert-portal-dev:
+    container_name: expert-portal-dev
+    image: expert-portal-dev
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./app:/app/app
+    networks:
+      - profileservice_node-network
+    ports:
+      - 3000:3000
+
+networks:
+  profileservice_node-network:
+    external: true
