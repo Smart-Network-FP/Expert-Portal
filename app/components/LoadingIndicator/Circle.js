@@ -8,7 +8,6 @@ const circleFadeDelay = keyframes`
   100% {
     opacity: 0;
   }
-
   40% {
     opacity: 1;
   }

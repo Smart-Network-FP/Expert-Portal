@@ -14,35 +14,38 @@ import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
-import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
-import { Link } from 'react-router-dom';
-import AtPrefix from './AtPrefix';
-import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
-import Section from './Section';
+// import {
+//   makeSelectRepos,
+//   makeSelectLoading,
+//   makeSelectError,
+// } from 'containers/App/selectors';
+// import H2 from 'components/H2';
+// import ReposList from 'components/ReposList';
+// import { Link } from 'react-router-dom';
+// import AtPrefix from './AtPrefix';
+// import CenteredSection from './CenteredSection';
+// import Form from './Form';
+// import Input from './Input';
+// import Section from './Section';
+import { Typography } from 'antd';
+import NormalLoginForm from 'components/NormalLoginForm';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+// import { loadRepos } from '../App/actions';
+// import { changeUsername } from './actions';
+// import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+const { Title } = Typography;
 
-const key = 'home';
+const key = 'login';
 
-export function HomePage({
+export function Login({
   username,
   loading,
   error,
   repos,
   onSubmitForm,
-  onChangeUsername,
+  // onChangeUsername,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -61,16 +64,19 @@ export function HomePage({
   return (
     <article>
       <Helmet>
-        <title>Home Page</title>
-        <meta name="description" content="SMART NETWORK homepage" />
+        <title>Login</title>
+        <meta name="description" content="SMART NETWORK Login" />
       </Helmet>
-      <CenteredSection>
-        <H2>Login</H2>
-      </CenteredSection>
-
-      <nav>
-        <Link to="/signup">Signup</Link> <Link to="/profile">Account</Link>
-      </nav>
+      <section>
+        <center>
+          <Title>
+            <FormattedMessage {...messages.header} />
+          </Title>
+        </center>
+      </section>
+      <section>
+        <NormalLoginForm />
+      </section>
       {/* <div>
         <CenteredSection>
           <H2>
@@ -106,7 +112,7 @@ export function HomePage({
   );
 }
 
-HomePage.propTypes = {
+Login.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -116,10 +122,10 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
+  // repos: makeSelectRepos(),
+  // username: makeSelectUsername(),
+  // loading: makeSelectLoading(),
+  // error: makeSelectError(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -127,7 +133,7 @@ export function mapDispatchToProps(dispatch) {
     onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
+      // dispatch(loadRepos());
     },
   };
 }
@@ -140,4 +146,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(HomePage);
+)(Login);

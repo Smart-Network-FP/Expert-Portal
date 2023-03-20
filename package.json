@@ -26,6 +26,7 @@
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production node server",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up",
     "presetup": "npm i chalk shelljs",
     "setup": "node ./internals/scripts/setup.js",
     "clean": "shjs ./internals/scripts/clean.js",
@@ -37,7 +38,6 @@
     "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
     "lint:js": "npm run lint:eslint -- . ",
     "lint:staged": "lint-staged",
-    "pretest": "npm run test:clean && npm run lint",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
+    "antd": "^3.26.20",
     "chalk": "2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",

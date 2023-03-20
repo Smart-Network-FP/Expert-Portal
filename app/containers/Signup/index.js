@@ -1,134 +1,63 @@
-/*
- * HomePage
+/**
  *
- * This is the first thing users see of our App, at the '/' route
+ * Signup
+ *
  */
 
-import React, { useEffect, memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 
-import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
-import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
+import { useInjectReducer } from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
-import AtPrefix from './AtPrefix';
-import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
-import Section from './Section';
-import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { Typography } from 'antd';
+import NormalSignupForm from 'components/NormalSignupForm';
+import makeSelectSignup from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import messages from './messages';
+const { Title } = Typography;
 
-const key = 'home';
-
-export function HomePage({
-  username,
-  loading,
-  error,
-  repos,
-  onSubmitForm,
-  onChangeUsername,
-}) {
-  useInjectReducer({ key, reducer });
-  useInjectSaga({ key, saga });
-
-  useEffect(() => {
-    // When initial state username is not null, submit the form to load repos
-    if (username && username.trim().length > 0) onSubmitForm();
-  }, []);
-
-  const reposListProps = {
-    loading,
-    error,
-    repos,
-  };
+export function Signup() {
+  useInjectReducer({ key: 'signup', reducer });
+  useInjectSaga({ key: 'signup', saga });
 
   return (
-    <article>
+    <div>
       <Helmet>
-        <title>Home Page</title>
-        <meta name="description" content="SMART NETWORK homepage" />
+        <title>Signup</title>
+        <meta name="description" content="Description of Signup" />
       </Helmet>
-      <CenteredSection>
-        <H2>Signup</H2>
-      </CenteredSection>
-
-      <nav>
-        <Link to="/login">Login</Link> <Link to="/profile">Account</Link>
-      </nav>
-      {/* <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
-      </div> */}
-    </article>
+      <section>
+        <center>
+          <Title>
+            <FormattedMessage {...messages.header} />
+          </Title>
+        </center>
+      </section>
+      <section>
+        <NormalSignupForm />
+      </section>
+    </div>
   );
 }
 
-HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
+Signup.propTypes = {
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
+  signup: makeSelectSignup(),
 });
 
-export function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },
+    dispatch,
   };
 }
 
@@ -137,7 +66,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(
-  withConnect,
-  memo,
-)(HomePage);
+export default compose(withConnect)(Signup);
