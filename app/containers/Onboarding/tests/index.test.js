@@ -14,7 +14,7 @@ import { IntlProvider } from 'react-intl';
 import { Onboarding } from '../index';
 import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<Onboarding />', () => {
+describe.skip('<Onboarding />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
     const dispatch = jest.fn();

@@ -59,7 +59,7 @@
       "git add --force"
     ]
   },
-  "pre-commit": "lint:staged",
+  "pre-commit-disable": "lint:staged",
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
   },

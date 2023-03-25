@@ -2,16 +2,96 @@
 
 exports[`<App /> should render and match the snapshot 1`] = `
 <div>
-  <Switch>
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
+  <HelmetWrapper
+    defaultTitle="SMART NETWORK"
+    defer={true}
+    encodeSpecialCharacters={true}
+    titleTemplate="%s - SMART NETWORK"
+  >
+    <meta
+      content="A SMART NETWORK application"
+      name="description"
     />
-    <Route
-      component={[Function]}
-    />
-  </Switch>
+  </HelmetWrapper>
+  <BrowserRouter
+    history={[Function]}
+  >
+    <Switch>
+      <Redirect
+        exact={true}
+        from="/"
+        to="/home"
+      />
+      <Route
+        exact={true}
+        path={
+          Array [
+            "/login",
+            "/signup",
+          ]
+        }
+      >
+        <UNDEFINED>
+          <Row
+            gutter={0}
+            justify="center"
+            type="flex"
+          >
+            <Col
+              span={8}
+            >
+              <Card
+                style={
+                  Object {
+                    "marginBottom": 20,
+                    "marginTop": 40,
+                    "minHeight": "80%",
+                  }
+                }
+              >
+                <Switch>
+                  <Route
+                    component={[Function]}
+                    path="/login"
+                  />
+                  <Route
+                    component={[Function]}
+                    path="/signup"
+                  />
+                </Switch>
+              </Card>
+            </Col>
+          </Row>
+        </UNDEFINED>
+      </Route>
+      <Route
+        component={[Function]}
+        path="/onboarding"
+      />
+      <Route
+        exact={true}
+        path={
+          Array [
+            "/home",
+            "/dashboard",
+          ]
+        }
+      >
+        <div>
+          <Switch>
+            <Route
+              component={[Function]}
+              path="/home"
+            />
+          </Switch>
+        </div>
+      </Route>
+      <Route
+        component={[Function]}
+        path="*"
+      />
+    </Switch>
+  </BrowserRouter>
   <GlobalStyleComponent />
 </div>
 `;

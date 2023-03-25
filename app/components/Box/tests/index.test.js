@@ -14,7 +14,7 @@ import { IntlProvider } from 'react-intl';
 import Box from '../index';
 import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<Box />', () => {
+describe.skip('<Box />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
     render(

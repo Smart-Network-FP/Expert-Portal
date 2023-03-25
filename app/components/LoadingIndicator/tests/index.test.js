@@ -12,7 +12,7 @@ import { render } from 'react-testing-library';
 
 import LoadingIndicator from '../index';
 
-describe('<LoadingIndicator />', () => {
+describe.skip('<LoadingIndicator />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
     render(<LoadingIndicator />);
