@@ -127,6 +127,17 @@ function PersonalPage(props) {
             )}
           </Form.Item>
         </FormInline>
+        <Form.Item>
+          {getFieldDecorator('select-language', {
+            rules: [{ required: true, message: 'Please select the language!' }],
+          })(
+            <Select placeholder="Please select a language">
+              <Option value="english">English</Option>
+              <Option value="hindi">Hindi</Option>
+              <Option value="japanese">Japanese</Option>
+            </Select>,
+          )}
+        </Form.Item>
       </Form>
     </PersonalFormWrapper>
   );

@@ -12,10 +12,29 @@ const ngrok =
     ? require('ngrok')
     : false;
 const { resolve } = require('path');
+const axios = require('axios');
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
+app.post('/api/expert/login', async (req, res) => {
+  console.log('Body', req.body);
+  console.log(`-----> ${process.env.PROFILE_SERVICE}/v1/auth/expert/login`);
+  const response = await axios.post(
+    `http://${process.env.PROFILE_SERVICE}:3000/v1/auth/expert/login`,
+    {
+      email: 'habeeb1234@test.com',
+      password: 'Habeeb123',
+    },
+  );
+  console.log('Body2', response.data);
+  if (response) {
+    res.send(response.body);
+  } else {
+    res.send({});
+  }
+  console.log('Body 3', response.data);
+});
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

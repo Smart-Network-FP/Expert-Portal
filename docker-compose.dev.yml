@@ -9,6 +9,7 @@ services:
       target: development
     volumes:
       - ./app:/app/app
+      - ./server:/app/server
     networks:
       - profileservice_node-network
     ports:

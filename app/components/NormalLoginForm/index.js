@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -14,13 +14,28 @@ import { Link } from 'react-router-dom';
 import messages from './messages';
 
 function NormalLoginForm(props) {
+  const [state, setState] = useState({
+    loading: false,
+  });
   const handleSubmit = e => {
+    setState(s => ({ ...s, loading: true }));
     e.preventDefault();
+    console.log(props);
     props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
     });
+
+    props
+      .onSubmit()
+      .then(response => {
+        console.log(response);
+        setState(s => ({ ...s, loading: false }));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   const { getFieldDecorator } = props.form;
 
@@ -75,5 +90,5 @@ function NormalLoginForm(props) {
 }
 
 NormalLoginForm.propTypes = {};
-const WrapperLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+const WrapperLoginForm = Form.create({ name: 'normal-login' })(NormalLoginForm);
 export default memo(WrapperLoginForm);
