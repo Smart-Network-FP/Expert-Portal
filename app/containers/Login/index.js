@@ -28,7 +28,8 @@ import { useInjectSaga } from 'utils/injectSaga';
 // import Input from './Input';
 // import Section from './Section';
 import { Typography } from 'antd';
-import NormalLoginForm from 'components/NormalLoginForm';
+// import NormalLoginForm from 'components/NormalLoginForm';
+import LoginForm from 'components/LoginForm';
 import messages from './messages';
 // import { loadRepos } from '../App/actions';
 // import { changeUsername } from './actions';
@@ -62,11 +63,14 @@ export function Login({
   };
 
   return (
-    <article>
+    <section>
+      {/* HEADER CONFIG SECTION */}
       <Helmet>
         <title>Login</title>
         <meta name="description" content="SMART NETWORK Login" />
       </Helmet>
+      {/* PAGE BODY STARTS HERE */}
+
       <section>
         <center>
           <Title>
@@ -75,40 +79,10 @@ export function Login({
         </center>
       </section>
       <section>
-        <NormalLoginForm />
+        {/* <NormalLoginForm /> */}
+        <LoginForm />
       </section>
-      {/* <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
-      </div> */}
-    </article>
+    </section>
   );
 }
 

@@ -10,10 +10,10 @@ services:
     volumes:
       - ./app:/app/app
     networks:
-      - profileservice_node-network
+      - profile-service_node-network
     ports:
       - 3000:3000
 
 networks:
-  profileservice_node-network:
+  profile-service_node-network:
     external: true
