@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import { Form } from 'antd';
+import { Form, Checkbox, Typography, Icon } from 'antd';
 import CustomInput from 'components/CustomInput';
-import messages from './messages';
+import { Link } from 'react-router-dom';
+import CustomButton from 'components/CustomButton';
+
+const { Text } = Typography;
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
-    console.log(username, password);
+    console.log(username, password, rememberMe);
   }, [username, password]);
   // console.log(inputValue);
 
   return (
-    <React.Fragment>
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+    <>
       <Form layout="vertical">
         <CustomInput
           label="Username"
@@ -29,11 +29,30 @@ function LoginForm() {
         />
         <CustomInput
           label="Password"
-          type="password"
+          type="Password"
           onGetData={data => setPassword(data)}
+          suffix={<Icon type="eye" style={{ color: 'rgba(0,0,0,.45)' }} />}
         />
       </Form>
-    </React.Fragment>
+
+      <div className="remember_me_section">
+        <Checkbox onChange={e => setRememberMe(e.target.checked)}>
+          Remember me
+        </Checkbox>
+        <Link to="/">Forgot password ?</Link>
+      </div>
+      <CustomButton type="primary">Login</CustomButton>
+
+      <Text
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        Not registered ?<Link to="/">. Create an account </Link>
+      </Text>
+    </>
   );
 }
 LoginForm.propTypes = {};

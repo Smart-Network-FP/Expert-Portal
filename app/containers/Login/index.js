@@ -30,12 +30,15 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { Typography } from 'antd';
 // import NormalLoginForm from 'components/NormalLoginForm';
 import LoginForm from 'components/LoginForm';
+import LOGO from '../../images/full-Logo.svg';
+// eslint-disable-next-line import/named
 import messages from './messages';
 // import { loadRepos } from '../App/actions';
 // import { changeUsername } from './actions';
 // import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { Brand, Main } from './login.style';
 const { Title } = Typography;
 
 const key = 'login';
@@ -63,26 +66,24 @@ export function Login({
   };
 
   return (
-    <section>
+    <>
       {/* HEADER CONFIG SECTION */}
       <Helmet>
-        <title>Login</title>
+        <title>SMART NETWORK | Login</title>
         <meta name="description" content="SMART NETWORK Login" />
       </Helmet>
       {/* PAGE BODY STARTS HERE */}
 
-      <section>
-        <center>
-          <Title>
-            <FormattedMessage {...messages.header} />
-          </Title>
-        </center>
-      </section>
-      <section>
-        {/* <NormalLoginForm /> */}
+      <Main>
+        <Brand>
+          <img src={LOGO} alt="brand logo" />
+        </Brand>
+        <Title level={3} className="center">
+          <FormattedMessage {...messages.header} />
+        </Title>
         <LoginForm />
-      </section>
-    </section>
+      </Main>
+    </>
   );
 }
 

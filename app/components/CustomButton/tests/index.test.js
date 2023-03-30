@@ -1,6 +1,6 @@
 /**
  *
- * Tests for LoginForm
+ * Tests for CustomButton
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -11,15 +11,15 @@ import { render } from 'react-testing-library';
 import { IntlProvider } from 'react-intl';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import LoginForm from '../index';
+import CustomButton from '../index';
 import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<LoginForm />', () => {
+describe('<CustomButton />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
     render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <LoginForm />
+        <CustomButton />
       </IntlProvider>,
     );
     expect(spy).not.toHaveBeenCalled();
@@ -39,7 +39,7 @@ describe('<LoginForm />', () => {
       container: { firstChild },
     } = render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <LoginForm />
+        <CustomButton />
       </IntlProvider>,
     );
     expect(firstChild).toMatchSnapshot();
