@@ -9,7 +9,7 @@ import CustomButton from 'components/CustomButton';
 
 const { Text } = Typography;
 
-function LoginForm() {
+function SignupForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -23,15 +23,34 @@ function LoginForm() {
     <>
       <Form layout="vertical">
         <CustomInput
-          label="Username"
-          type="username"
+          label="Firstname"
+          type="text"
+          rules={[{ required: true, message: `Firstname is required.` }]}
+          onGetData={data => setUsername(data)}
+        />
+        <CustomInput
+          label="Lastname"
+          type="text"
+          rules={[{ required: true, message: `Lastname is required.` }]}
+          onGetData={data => setUsername(data)}
+        />
+        <CustomInput
+          label="Email"
+          type="email"
           rules={[{ required: true, message: `Email is required.` }]}
           onGetData={data => setUsername(data)}
         />
         <CustomInput
           label="Password"
           type="Password"
-          rules={[{ required: true, message: `Email is required.` }]}
+          rules={[{ required: true, message: `Password is required.` }]}
+          onGetData={data => setPassword(data)}
+          suffix={<Icon type="eye" style={{ color: 'rgba(0,0,0,.45)' }} />}
+        />
+        <CustomInput
+          label="Confirm password"
+          type="Password"
+          rules={[{ required: true, message: `password is required.` }]}
           onGetData={data => setPassword(data)}
           suffix={<Icon type="eye" style={{ color: 'rgba(0,0,0,.45)' }} />}
         />
@@ -57,7 +76,7 @@ function LoginForm() {
     </>
   );
 }
-LoginForm.propTypes = {};
+SignupForm.propTypes = {};
 
-const WrapperMyLoginForm = Form.create({ name: 'login_form' })(LoginForm);
-export default WrapperMyLoginForm;
+const WrapperMySignupForm = Form.create({ name: 'signup_form' })(SignupForm);
+export default WrapperMySignupForm;

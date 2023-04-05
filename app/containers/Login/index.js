@@ -30,7 +30,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { Typography } from 'antd';
 // import NormalLoginForm from 'components/NormalLoginForm';
 import LoginForm from 'components/LoginForm';
-import LOGO from '../../images/full-Logo.svg';
+import { LOGO } from 'images';
 // eslint-disable-next-line import/named
 import messages from './messages';
 // import { loadRepos } from '../App/actions';

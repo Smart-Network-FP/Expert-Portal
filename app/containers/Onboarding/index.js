@@ -16,6 +16,8 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NormalLoginForm from 'components/NormalLoginForm';
+import DashboardNav from 'components/DashboardNav';
+import OnboardingSteps from 'components/OnboardingSteps';
 import PersonalPage from 'components/PersonalPage';
 import ExperiencePage from 'components/ExperiencePage';
 import SummaryPage from 'components/SummaryPage';
@@ -35,6 +37,10 @@ export function Onboarding() {
         <meta name="description" content="Description of Onboarding" />
       </Helmet>
       {/* <FormattedMessage {...messages.header} /> */}
+      <div>
+        <DashboardNav />
+        <OnboardingSteps />
+      </div>
       <Switch>
         <Route exact path="/onboarding/personal" component={PersonalPage} />
         <Route exact path="/onboarding/experience" component={ExperiencePage} />

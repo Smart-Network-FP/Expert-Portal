@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { Form, Input, Icon } from 'antd';
 
-function CustomInput({ form, label, type, suffix }) {
+function CustomInput({ form, label, type, rules, suffix }) {
   // console.log(inputValue);
+  console.log(rules);
   const renderInput = () => {
     if (type === 'Password')
       return (
@@ -15,7 +16,7 @@ function CustomInput({ form, label, type, suffix }) {
       return (
         <Input.TextArea type="password" placeholder={label} size="large" />
       );
-    return <Input type="text" placeholder={label} size="large" />
+    return <Input type="text" placeholder={label} size="large" />;
   };
 
   const { getFieldDecorator } = form;
@@ -23,7 +24,7 @@ function CustomInput({ form, label, type, suffix }) {
     <React.Fragment>
       <Form.Item label={label || 'label'}>
         {getFieldDecorator(type || 'username', {
-          rules: [{ required: true, message: `${label} is required.` }],
+          rules: [...(rules || { required: false })],
           trigger: 'onChange',
         })(renderInput())}
       </Form.Item>
@@ -37,6 +38,7 @@ CustomInput.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   suffix: PropTypes.element,
+  rules: PropTypes.arrayOf(PropTypes.object),
 };
 
 const WrapperMyLoginForm = Form.create({

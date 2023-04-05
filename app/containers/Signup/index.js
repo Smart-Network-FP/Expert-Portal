@@ -1,63 +1,115 @@
-/**
+/*
+ * HomePage
  *
- * Signup
- *
+ * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { Link } from 'react-router-dom';
+import { useInjectSaga } from 'utils/injectSaga';
+// import {
+//   makeSelectRepos,
+//   makeSelectLoading,
+//   makeSelectError,
+// } from 'containers/App/selectors';
+// import H2 from 'components/H2';
+// import ReposList from 'components/ReposList';
+// import { Link } from 'react-router-dom';
+// import AtPrefix from './AtPrefix';
+// import CenteredSection from './CenteredSection';
+// import Form from './Form';
+// import Input from './Input';
+// import Section from './Section';
 import { Typography } from 'antd';
-import NormalSignupForm from 'components/NormalSignupForm';
-import makeSelectSignup from './selectors';
+// import NormalLoginForm from 'components/NormalLoginForm';
+import SignupForm from 'components/SignupForm';
+import { LOGO } from 'images';
+// eslint-disable-next-line import/named
+import messages from './messages';
+// import { loadRepos } from '../App/actions';
+// import { changeUsername } from './actions';
+// import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import { Brand, Main } from './signup.style';
 const { Title } = Typography;
 
-export function Signup() {
-  useInjectReducer({ key: 'signup', reducer });
-  useInjectSaga({ key: 'signup', saga });
+const key = 'login';
+
+export function Signup({
+  username,
+  loading,
+  error,
+  repos,
+  onSubmitForm,
+  // onChangeUsername,
+}) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    // When initial state username is not null, submit the form to load repos
+    if (username && username.trim().length > 0) onSubmitForm();
+  }, []);
+
+  const reposListProps = {
+    loading,
+    error,
+    repos,
+  };
 
   return (
-    <div>
+    <>
+      {/* HEADER CONFIG SECTION */}
       <Helmet>
-        <title>Signup</title>
-        <meta name="description" content="Description of Signup" />
+        <title>SMART NETWORK | Signup</title>
+        <meta name="description" content="SMART NETWORK Login" />
       </Helmet>
-      <section>
-        <center>
-          <Title>
-            <FormattedMessage {...messages.header} />
-          </Title>
-        </center>
-      </section>
-      <section>
-        <NormalSignupForm />
-      </section>
-    </div>
+      {/* PAGE BODY STARTS HERE */}
+
+      <Main>
+        <Brand>
+          <img src={LOGO} alt="brand logo" />
+        </Brand>
+        <Title level={3} className="center">
+          <FormattedMessage {...messages.header} />
+        </Title>
+        <SignupForm />
+      </Main>
+    </>
   );
 }
 
 Signup.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  onSubmitForm: PropTypes.func,
+  username: PropTypes.string,
+  onChangeUsername: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  signup: makeSelectSignup(),
+  // repos: makeSelectRepos(),
+  // username: makeSelectUsername(),
+  // loading: makeSelectLoading(),
+  // error: makeSelectError(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onSubmitForm: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      // dispatch(loadRepos());
+    },
   };
 }
 
@@ -66,4 +118,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Signup);
+export default compose(
+  withConnect,
+  memo,
+)(Signup);
