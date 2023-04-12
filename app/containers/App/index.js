@@ -22,8 +22,6 @@ import Signup from 'containers/Signup/Loadable';
 import Onboarding from 'containers/Onboarding/Loadable';
 import { Helmet } from 'react-helmet';
 import { createBrowserHistory } from 'history';
-import { Card, Col, Row } from 'antd';
-import TopWrapper from 'components/TopWrapper';
 import GlobalStyle from '../../global-styles';
 import 'antd/dist/antd.css';
 
@@ -37,31 +35,10 @@ export default function App() {
         <Switch>
           <Redirect exact from="/" to="/home" />
           <Route exact path={['/login', '/signup']}>
-            <TopWrapper>
-              <Row type="flex" justify="center">
-                <Col
-                  span={8}
-                  // offset={6}
-                  // style={{
-                  //   alignItems: 'center',
-                  //   textAlign: 'center',
-                  // }}
-                >
-                  <Card
-                    style={{
-                      marginTop: 40,
-                      marginBottom: 20,
-                      minHeight: '80%',
-                    }}
-                  >
-                    <Switch>
-                      <Route path="/login" component={Login} />
-                      <Route path="/signup" component={Signup} />
-                    </Switch>
-                  </Card>
-                </Col>
-              </Row>
-            </TopWrapper>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+            </Switch>
           </Route>
           <Route path="/onboarding" component={Onboarding} />
           <Route exact path={['/home', '/dashboard']}>

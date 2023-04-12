@@ -28,13 +28,17 @@ import { useInjectSaga } from 'utils/injectSaga';
 // import Input from './Input';
 // import Section from './Section';
 import { Typography } from 'antd';
-import NormalLoginForm from 'components/NormalLoginForm';
+// import NormalLoginForm from 'components/NormalLoginForm';
+import LoginForm from 'components/LoginForm';
+import { LOGO } from 'images';
+// eslint-disable-next-line import/named
 import messages from './messages';
 // import { loadRepos } from '../App/actions';
 // import { changeUsername } from './actions';
 // import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { Brand, Main } from './login.style';
 const { Title } = Typography;
 
 const key = 'login';
@@ -62,53 +66,24 @@ export function Login({
   };
 
   return (
-    <article>
+    <>
+      {/* HEADER CONFIG SECTION */}
       <Helmet>
-        <title>Login</title>
+        <title>SMART NETWORK | Login</title>
         <meta name="description" content="SMART NETWORK Login" />
       </Helmet>
-      <section>
-        <center>
-          <Title>
-            <FormattedMessage {...messages.header} />
-          </Title>
-        </center>
-      </section>
-      <section>
-        <NormalLoginForm />
-      </section>
-      {/* <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
-      </div> */}
-    </article>
+      {/* PAGE BODY STARTS HERE */}
+
+      <Main>
+        <Brand>
+          <img src={LOGO} alt="brand logo" />
+        </Brand>
+        <Title level={3} className="center">
+          <FormattedMessage {...messages.header} />
+        </Title>
+        <LoginForm />
+      </Main>
+    </>
   );
 }
 
