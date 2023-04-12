@@ -17,3 +17,4 @@ services:
 networks:
   profile-service_node-network:
     external: true
+
