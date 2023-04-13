@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  *
  * OnboardingSteps
@@ -7,7 +8,7 @@
 import React, { memo, useState } from 'react';
 import { Typography, Steps } from 'antd';
 import { HAND } from 'images';
-import OnboardingPersonalForm from 'components/OnboardingPersonalForm';
+// import OnboardingPersonalForm from 'components/OnboardingPersonalForm';
 import {
   HorizintalLine,
   Main,
@@ -22,19 +23,19 @@ const { Title, Text } = Typography;
 const { Step } = Steps;
 
 function OnboardingSteps() {
-  const Firstname = 'Jane';
+  // const Firstname = 'Jane';
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleNext = () => {
-    setCurrentStep(currentStep + 1);
-  };
+  // const handleNext = () => {
+  //   setCurrentStep(currentStep + 1);
+  // };
 
   return (
     <>
       <Main>
         <MessageHolder>
           <div className="left">
-            <Title level={2}> Welcome {Firstname}</Title>
+            <Title level={2}> Welcome</Title>
             <Text id="Text">
               Thanks for joining Smart Network. To be eligible for jobs you must
               complete your vetting process, but don’t worry, we will guide you
@@ -64,7 +65,7 @@ function OnboardingSteps() {
         </Steps>
       </Stepper>
       <HorizintalLine />
-{/* 
+      {/* 
       <OnboardingPersonalForm /> */}
     </>
   );
