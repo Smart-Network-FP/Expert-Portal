@@ -62,7 +62,7 @@ function SignupForm() {
         </Checkbox>
         <Link to="/">Forgot password ?</Link>
       </div>
-      <CustomButton type="primary">Login</CustomButton>
+      <CustomButton type="primary"><Link to="/onboarding/">Sign up</Link></CustomButton>
 
       <Text
         style={{
@@ -71,7 +71,7 @@ function SignupForm() {
           justifyContent: 'center',
         }}
       >
-        Not registered ?<Link to="/">. Create an account </Link>
+        Already registered ?<Link to="/">. Login here </Link>
       </Text>
     </>
   );

@@ -33,7 +33,7 @@ export default function App() {
       </Helmet>
       <Router history={createBrowserHistory}>
         <Switch>
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/login" />
           <Route exact path={['/login', '/signup']}>
             <Switch>
               <Route path="/login" component={Login} />

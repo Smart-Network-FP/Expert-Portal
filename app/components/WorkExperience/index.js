@@ -9,9 +9,16 @@ import React, { useState } from 'react';
 // import styled from 'styled-components';
 import { Icon, Modal, Checkbox } from 'antd';
 import CustomSelect from 'components/CustomSelect';
+import CustomButton from 'components/CustomButton';
+import { Link } from 'react-router-dom';
 import { GENERATE_RANDOM_ID, GET_DATE } from 'utils/utility';
 import CustomInput from '../CustomInput';
-import { AddWorkExperience, Main, DoubleField } from './workExperience.style';
+import {
+  AddWorkExperience,
+  Main,
+  DoubleField,
+  BottomNavigation,
+} from './workExperience.style';
 import SingleExperience from './SingleExperience';
 
 function WorkExperience() {
@@ -56,12 +63,12 @@ function WorkExperience() {
     <Main>
       {experiences.length > 0
         ? experiences.map(item => (
-          <SingleExperience
-              handleDelete={() => deleteCard(item)}
-              key={item.id}
-              {...item}
-            />
-        ))
+            <SingleExperience
+            handleDelete={() => deleteCard(item)}
+            key={item.id}
+            {...item}
+          />
+          ))
         : ''}
       <Modal
         title="Add work experience"
@@ -156,6 +163,13 @@ function WorkExperience() {
           <Icon type="plus-circle" theme="filled" className="addIco" />
         </span>
       </AddWorkExperience>
+
+      <BottomNavigation>
+        <CustomButton type="secondary">Back</CustomButton>
+        <CustomButton type="primary">
+          <Link to="/onboarding/work-experience"> Save and Continue </Link>
+        </CustomButton>
+      </BottomNavigation>
     </Main>
   );
 }
