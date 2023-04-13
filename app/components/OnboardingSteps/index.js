@@ -5,13 +5,16 @@
  */
 
 import React, { memo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { Typography, Steps } from 'antd';
 import { HAND } from 'images';
-import { HorizintalLine, Main, MessageHolder, Stepper } from './onboardingsteps.style';
+import OnboardingPersonalForm from 'components/OnboardingPersonalForm';
+import {
+  HorizintalLine,
+  Main,
+  MessageHolder,
+  Stepper,
+} from './onboardingsteps.style';
 
-import messages from './messages';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -20,11 +23,15 @@ const { Step } = Steps;
 
 function OnboardingSteps() {
   const Firstname = 'Jane';
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const handleNext = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
   return (
     <>
       <Main>
-        <FormattedMessage {...messages.header} />
         <MessageHolder>
           <div className="left">
             <Title level={2}> Welcome {Firstname}</Title>
@@ -41,7 +48,7 @@ function OnboardingSteps() {
       </Main>
       <Stepper>
         {/* steps go here */}
-        <Steps current={0}>
+        <Steps current={currentStep}>
           <Step
             title="Personal Details"
             description="Please provide use with your personal and contact details"
@@ -57,6 +64,8 @@ function OnboardingSteps() {
         </Steps>
       </Stepper>
       <HorizintalLine />
+{/* 
+      <OnboardingPersonalForm /> */}
     </>
   );
 }

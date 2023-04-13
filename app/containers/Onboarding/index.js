@@ -21,6 +21,8 @@ import OnboardingSteps from 'components/OnboardingSteps';
 import PersonalPage from 'components/PersonalPage';
 import ExperiencePage from 'components/ExperiencePage';
 import SummaryPage from 'components/SummaryPage';
+import OnboardingPersonalForm from 'components/OnboardingPersonalForm';
+import WorkExperience from 'components/WorkExperience';
 import makeSelectOnboarding from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -42,8 +44,17 @@ export function Onboarding() {
         <OnboardingSteps />
       </div>
       <Switch>
-        <Route exact path="/onboarding/personal" component={PersonalPage} />
+        <Route
+          exact
+          path="/onboarding/personal"
+          component={OnboardingPersonalForm}
+        />
         <Route exact path="/onboarding/experience" component={ExperiencePage} />
+        <Route
+          exact
+          path="/onboarding/work-experience"
+          component={WorkExperience}
+        />
         <Route exact path="/onboarding/summary" component={SummaryPage} />
         <Redirect from="/onboarding" to="/onboarding/personal" />
       </Switch>

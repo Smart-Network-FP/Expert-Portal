@@ -13,6 +13,7 @@ function CustomButton(props) {
   return (
     <Button
       block
+      size="large"
       className="myButton"
       {...props}
       style={{ margin: `20px auto` }}
