@@ -52,7 +52,7 @@ function LoginForm() {
           justifyContent: 'center',
         }}
       >
-        Not registered ?<Link to="/">. Create an account </Link>
+        Not registered ?<Link to="/signup">. Create an account </Link>
       </Text>
     </>
   );

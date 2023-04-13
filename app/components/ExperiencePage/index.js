@@ -54,7 +54,7 @@ function ExperiencePage() {
         <CustomSelect
           options={Skills}
           getData={data => setSkill(data)}
-          label="Country"
+          label="Skill"
           value={skill}
           mode="regular"
           firstActive

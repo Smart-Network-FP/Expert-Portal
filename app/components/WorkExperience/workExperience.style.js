@@ -46,3 +46,14 @@ export const DoubleField = styled.div`
     width: 100% !important;
   }
 `;
+
+
+export const BottomNavigation = styled.div`
+  margin-top: 50px;
+  border-top: 0.5px solid grey;
+  height: 200px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+`;
+
