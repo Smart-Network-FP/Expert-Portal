@@ -11,6 +11,7 @@ RUN apk add --no-cache automake autoconf libtool
 
 RUN mkdir -p /app && chown -R node:node /app
 ENV NODE_ENV development
+ENV PROFILE_SERVICE node-app-dev
 # Add a work directory
 WORKDIR /app
 USER node

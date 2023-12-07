@@ -28,4 +28,7 @@ module.exports = {
   setupFiles: ['raf/polyfill'],
   testRegex: 'tests/.*\\.test\\.js$',
   snapshotSerializers: [],
+  reporters: [
+    '/Users/habeebahmed/Desktop/SFBU Stuff/CS521/ExpertPortal/summaryReporter.js',
+  ],
 };

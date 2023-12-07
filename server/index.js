@@ -13,10 +13,31 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 const app = express();
+const apiRouter = require('./api');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
+// app.post('/api/expert/login', async (req, res) => {
+//   console.log('Body', req.body);
+//   console.log(`-----> ${process.env.PROFILE_SERVICE}/v1/auth/expert/login`);
+//   const response = await axios.post(
+//     `http://${process.env.PROFILE_SERVICE}:3000/v1/auth/expert/login`,
+//     {
+//       email: 'habeeb1234@test.com',
+//       password: 'Habeeb123',
+//     },
+//   );
+//   console.log('Body2', response.data);
+//   if (response) {
+//     res.send(response.body);
+//   } else {
+//     res.send({});
+//   }
+//   console.log('Body 3', response.data);
+// });
+app.use(express.json());
 
+app.use('/api', apiRouter);
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

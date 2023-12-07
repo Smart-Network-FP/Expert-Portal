@@ -4,22 +4,49 @@ import React, { useEffect, useState } from 'react';
 
 import { Form, Checkbox, Typography, Icon } from 'antd';
 import CustomInput from 'components/CustomInput';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import CustomButton from 'components/CustomButton';
+import axios from 'axios';
+import { compose } from 'redux';
+import { setCookie } from 'utils/cookies';
 
 const { Text } = Typography;
 
-function LoginForm() {
+// eslint-disable-next-line react/prop-types
+function LoginForm({ history }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(username, password, rememberMe);
   }, [username, password]);
   // console.log(inputValue);
 
-  return (
+  const onSubmitForm = async () => {
+    console.log('onsubmitForm');
+    setLoading(true);
+    axios
+      .post('/api/expert/login', {
+        email: username, // 'habeeb1234@test.com',
+        password, // 'Habeeb123',
+      })
+      .then(res => {
+        console.log('apiRes, ', res.data);
+        setCookie('authToken', res.data.tokens.access.token, 1); // Set for 7 days, for example
+        setLoading(false);
+        history.push('/onboarding/personal');
+      })
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
+  return loading ? (
+    <p>Loading</p>
+  ) : (
     <>
       <Form layout="vertical">
         <CustomInput
@@ -43,7 +70,9 @@ function LoginForm() {
         </Checkbox>
         <Link to="/">Forgot password ?</Link>
       </div>
-      <CustomButton type="primary">Login</CustomButton>
+      <CustomButton onClick={onSubmitForm} type="primary">
+        Login
+      </CustomButton>
 
       <Text
         style={{
@@ -59,5 +88,9 @@ function LoginForm() {
 }
 LoginForm.propTypes = {};
 
-const WrapperMyLoginForm = Form.create({ name: 'login_form' })(LoginForm);
-export default WrapperMyLoginForm;
+const enhance = compose(
+  withRouter,
+  Form.create({ name: 'login_form' }),
+);
+
+export default enhance(LoginForm);

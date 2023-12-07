@@ -40,7 +40,7 @@ export function Onboarding() {
       </Helmet>
       {/* <FormattedMessage {...messages.header} /> */}
       <div>
-        <DashboardNav />
+        {/* <DashboardNav /> */}
         <OnboardingSteps />
       </div>
       <Switch>

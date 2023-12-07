@@ -10,14 +10,16 @@ import React, { useEffect, useState } from 'react';
 import { Upload, Icon, message, Typography, Form, Select, Input } from 'antd';
 import CustomSelect from 'components/CustomSelect';
 import CustomButton from 'components/CustomButton';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import axios from 'axios';
+import { getCookie } from 'utils/cookies';
 import CustomInput from '../CustomInput';
 import {
   Main,
   PhotoAreaDetails,
   ProfilPhoto,
   DoubleField,
-  PhoneInputHolder,
+  // PhoneInputHolder,
   BottomNavigation,
 } from './onboadingpersonal.style';
 import { Industries } from './data';
@@ -25,8 +27,6 @@ import Countries from './countries';
 
 const { Option } = Select;
 const InputGroup = Input.Group;
-
-
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -48,13 +48,16 @@ function beforeUpload(file) {
 
 // Typography definition
 const { Text } = Typography;
-function OnboardingPersonalForm() {
+function OnboardingPersonalForm({ history }) {
   const [photoState, setPhotoState] = useState({
     loading: false,
     imageUrl: '',
   });
   const [userDetails, setUserDetails] = useState({
     firstName: '',
+    lastName: '',
+    languages: [],
+    phoneNumber: '',
   });
 
   const handleChange = info => {
@@ -75,10 +78,10 @@ function OnboardingPersonalForm() {
 
   const [currCountry, setCurCountry] = useState('');
   const [currStates, setStates] = useState([]);
-  const [getInduestries, setIndustries] = useState('');
+  const [getInduestries, setIndustries] = useState(Industries[0]);
   const countries = Countries.map(country => country.country);
-
- 
+  const [loading, setLoading] = useState(false);
+  const [authToken, setAuthToken] = useState('');
 
   // console.log({ history });
 
@@ -102,8 +105,12 @@ function OnboardingPersonalForm() {
   const [LocationData, setLoactionData] = useState({
     country: '',
     state: '',
+    city: '',
   });
 
+  useEffect(() => {
+    setAuthToken(getCookie('authToken'));
+  }, []);
   useEffect(() => {
     if (currCountry === '') setCurCountry(countries[0]);
     setLoactionData({ country: currCountry, state: '' });
@@ -111,6 +118,40 @@ function OnboardingPersonalForm() {
 
     console.log({ LocationData });
   }, [currCountry]);
+
+  const onSubmitForm = async () => {
+    console.log('onsubmitForm');
+    setLoading(true);
+    axios
+      .post(
+        '/api/expert/personal-info',
+        {
+          firstName: userDetails.firstName,
+          lastName: userDetails.lastName,
+          industry: getInduestries,
+          ...LocationData,
+          // city: LocationData.city,
+          // state: currStates,
+          // country: currCountry,
+          language: userDetails.languages.join(','),
+          phoneNumber: userDetails.phoneNumber,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        },
+      )
+      .then(res => {
+        console.log('apiRes, ', res.data);
+        setLoading(false);
+        history.push('/onboarding/expertise');
+      })
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
 
   return (
     <Main>
@@ -161,7 +202,7 @@ function OnboardingPersonalForm() {
             type="text"
             rules={[{ required: true, message: `Email is required.` }]}
             onGetData={data =>
-              setUserDetails({ ...userDetails, firstName: data })
+              setUserDetails({ ...userDetails, lastName: data })
             }
             mode="regular"
           />
@@ -178,7 +219,7 @@ function OnboardingPersonalForm() {
           <CustomSelect
             options={countries}
             getData={data => {
-              setLoactionData({ state: '', country: data });
+              setLoactionData({ state: '', country: data, city: '' });
               setCurCountry(data);
             }}
             label="Country"
@@ -187,6 +228,7 @@ function OnboardingPersonalForm() {
           />
 
           <CustomSelect
+            placeHolder="Select State"
             options={currStates}
             getData={data => {
               setLoactionData({ ...LocationData, state: data });
@@ -200,22 +242,29 @@ function OnboardingPersonalForm() {
             label="City"
             type="text"
             rules={[{ required: true, message: `City is required.` }]}
-            onGetData={data =>
-              setUserDetails({ ...userDetails, firstName: data })
-            }
+            onGetData={data => setLoactionData({ ...LocationData, city: data })}
           />
         </DoubleField>
 
         <CustomSelect
+          placeHolder="Select the languages"
           options={['English', 'French', 'Hindi']}
           getData={data => {
             console.log(data);
-            setLoactionData({ ...LocationData, state: data });
+            setUserDetails({ ...userDetails, languages: data });
           }}
           mode="tag"
           label="Language(s)"
         />
-
+        <CustomInput
+          label="Phone Number"
+          type="text"
+          rules={[{ required: true, message: `Phone Number is required.` }]}
+          onGetData={data =>
+            setUserDetails({ ...userDetails, phoneNumber: data })
+          }
+          mode="regular"
+        />
         {/* <PhoneInputHolder>
           <label htmlFor="Phone">Phone number</label>
           <InputGroup size="large" compact className="PhoneInput">
@@ -234,8 +283,9 @@ function OnboardingPersonalForm() {
 
       <BottomNavigation>
         <CustomButton type="secondary">Cancal</CustomButton>
-        <CustomButton type="primary">
-          <Link to="/onboarding/experience"> Save and Continue </Link>
+        <CustomButton type="primary" onClick={onSubmitForm}>
+          Save and Continue
+          {/* <Link to="/onboarding/experience"> Save and Continue </Link> */}
         </CustomButton>
       </BottomNavigation>
     </Main>
@@ -244,4 +294,4 @@ function OnboardingPersonalForm() {
 
 OnboardingPersonalForm.propTypes = {};
 
-export default OnboardingPersonalForm;
+export default withRouter(OnboardingPersonalForm);

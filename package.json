@@ -40,6 +40,7 @@
     "lint:staged": "lint-staged",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:p": "cross-env NODE_ENV=test jest --silent --coverage | grep 'PASS'",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",

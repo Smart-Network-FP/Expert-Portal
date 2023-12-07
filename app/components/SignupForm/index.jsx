@@ -6,6 +6,7 @@ import { Form, Checkbox, Typography, Icon } from 'antd';
 import CustomInput from 'components/CustomInput';
 import { Link } from 'react-router-dom';
 import CustomButton from 'components/CustomButton';
+import axios from 'axios';
 
 const { Text } = Typography;
 
@@ -15,9 +16,15 @@ function SignupForm() {
   const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
-    console.log(username, password, rememberMe);
+    // console.log(username, password, rememberMe);
   }, [username, password]);
   // console.log(inputValue);
+  const createAccount = async () => {
+    console.log(username, password, rememberMe);
+    console.log('Create Account');
+    const res = await axios.get('/test');
+    console.log(res.data, res);
+  };
 
   return (
     <>
@@ -62,7 +69,10 @@ function SignupForm() {
         </Checkbox>
         <Link to="/">Forgot password ?</Link>
       </div>
-      <CustomButton type="primary"><Link to="/onboarding/">Sign up</Link></CustomButton>
+      <CustomButton type="primary" onClick={createAccount}>
+        {/* <Link to="/onboarding/">Sign up</Link> */}
+        Sign up
+      </CustomButton>
 
       <Text
         style={{
