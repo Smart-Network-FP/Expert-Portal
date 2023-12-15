@@ -4,13 +4,15 @@ import React, { useEffect, useState } from 'react';
 
 import { Form, Checkbox, Typography, Icon } from 'antd';
 import CustomInput from 'components/CustomInput';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import CustomButton from 'components/CustomButton';
 import axios from 'axios';
+import { setCookie } from 'utils/cookies';
+import { compose } from 'redux';
 
 const { Text } = Typography;
 
-function SignupForm() {
+function SignupForm({ history }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -20,10 +22,23 @@ function SignupForm() {
   }, [username, password]);
   // console.log(inputValue);
   const createAccount = async () => {
-    console.log(username, password, rememberMe);
-    console.log('Create Account');
-    const res = await axios.get('/test');
-    console.log(res.data, res);
+    console.log('createAccount');
+    // setLoading(true);
+    axios
+      .post('/api/expert/register', {
+        email: username, // 'habeeb1234@test.com',
+        password, // 'Habeeb123',
+      })
+      .then(res => {
+        console.log('apiRes, ', res.data);
+        setCookie('authToken', res.data.tokens.access.token, 1); // Set for 7 days, for example
+        // setLoading(false);
+        history.push('/onboarding/personal');
+      })
+      .catch(err => {
+        // setLoading(false);
+        console.log(err);
+      });
   };
 
   return (
@@ -88,5 +103,9 @@ function SignupForm() {
 }
 SignupForm.propTypes = {};
 
-const WrapperMySignupForm = Form.create({ name: 'signup_form' })(SignupForm);
-export default WrapperMySignupForm;
+const enhance = compose(
+  withRouter,
+  Form.create({ name: 'signup_form' }),
+);
+
+export default enhance(SignupForm);

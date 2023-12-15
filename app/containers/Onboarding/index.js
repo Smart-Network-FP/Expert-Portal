@@ -19,7 +19,7 @@ import NormalLoginForm from 'components/NormalLoginForm';
 import DashboardNav from 'components/DashboardNav';
 import OnboardingSteps from 'components/OnboardingSteps';
 import PersonalPage from 'components/PersonalPage';
-import ExperiencePage from 'components/ExperiencePage';
+import ExpertisePage from 'components/ExpertisePage';
 import SummaryPage from 'components/SummaryPage';
 import OnboardingPersonalForm from 'components/OnboardingPersonalForm';
 import WorkExperience from 'components/WorkExperience';
@@ -49,7 +49,7 @@ export function Onboarding() {
           path="/onboarding/personal"
           component={OnboardingPersonalForm}
         />
-        <Route exact path="/onboarding/experience" component={ExperiencePage} />
+        <Route exact path="/onboarding/expertise" component={ExpertisePage} />
         <Route
           exact
           path="/onboarding/work-experience"

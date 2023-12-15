@@ -16,7 +16,7 @@ export default function HomePage() {
     <>
       <h1>
         <FormattedMessage {...messages.header} />
-        <Button type="primary">Primary</Button>
+        {/* <Button type="primary">Primary</Button> */}
       </h1>
     </>
   );

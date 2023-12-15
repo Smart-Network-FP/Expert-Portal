@@ -23,6 +23,26 @@ router.post('/expert/login', async (req, res) => {
   }
 });
 
+router.post('/expert/register', async (req, res) => {
+  console.log('Body', req.body);
+  console.log(`-----> ${process.env.PROFILE_SERVICE}/v1/auth/expert/register`);
+  const response = await axios.post(
+    `http://${process.env.PROFILE_SERVICE}:9000/v1/auth/expert/register`,
+    {
+      ...req.body,
+    },
+  );
+  console.log('Body2', response.data);
+  if (response) {
+    axios.defaults.headers.common.Authorization = `Bearer ${
+      response.data.tokens.access.token
+    }`;
+    res.send(response.data);
+  } else {
+    res.send({});
+  }
+});
+
 router.post('/expert/personal-info', async (req, res) => {
   console.log('Body', req.body);
   console.log(`-----> ${process.env.PROFILE_SERVICE}/v1/experts/personal-info`);
@@ -58,7 +78,7 @@ router.post('/expert/experience', async (req, res) => {
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
     },
   );
@@ -72,10 +92,17 @@ router.post('/expert/experience', async (req, res) => {
 router.post('/expert/expertise', async (req, res) => {
   console.log('Body', req.body);
   console.log(`-----> ${process.env.PROFILE_SERVICE}/v1/experts/expertise`);
+  const token = req.headers.authorization || req.headers.Authorization;
+  console.log('Token ', token);
   const response = await axios.post(
     `http://${process.env.PROFILE_SERVICE}:9000/v1/experts/expertise`,
     {
       ...req.body,
+    },
+    {
+      headers: {
+        Authorization: token,
+      },
     },
   );
   console.log('Body2', response.data);
